@@ -1,3 +1,5 @@
+//We sometimes call these impure functions the 'imperative shell' around the pure core of the program.
+
 //using collect to and partial function filter a collection
 val elements = Seq("a", "bb", "cc", "ddd") //> elements  : Seq[String] = List(a, bb, cc, ddd)
 def accept = (s: String) => s.length > 1 //> accept: => String => Boolean
@@ -21,6 +23,38 @@ case class Conc() extends Generic
 def covariantParams[A<: Generic](g:A, f:A=>Int) = f(g)
 val f = (s:Conc) => 5
 
-
 covariantParams(Conc(),f)
+
+
+// Call-by-name vs call-by-value
+
+
+
+def callByValue(x: Int) = {
+  println("x1=" + x)
+  println("x2=" + x)
+}
+
+
+
+def callByName(x: => Int) = {
+  println("x1=" + x)
+  println("x2=" + x)
+}
+
+def something() = {
+  println("calling something")
+  1 // return value
+}
+
+callByValue(something())
+//calling something
+//  x1=1
+//  x2=1
+
+callByName(something())
+// calling something
+// x1=1
+// calling something
+// x2=1
 
