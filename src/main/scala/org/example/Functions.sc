@@ -3,6 +3,7 @@ val elements = Seq("a", "bb", "cc", "ddd") //> elements  : Seq[String] = List(a,
 def accept = (s: String) => s.length > 1 //> accept: => String => Boolean
 def transform = (s: String) => s.toUpperCase //> transform: => String => String
 val collectResult = elements collect {case se: String if accept(se) => transform(se)}
+
 //partial function short form
 val divide: PartialFunction[Int, Int] = {case d: Int if d != 0 => 42 / d}
 //> divide  : PartialFunction[Int,Int] = <function1>
@@ -56,3 +57,7 @@ callByName(something())
 // calling something
 // x2=1
 
+
+
+//functional composition
+//val in = findEventHistory _ andThen (h=>findDuplicate(_,h))
