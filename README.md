@@ -12,3 +12,7 @@ Control structures end up disappearing, and that can be a good thing.
 Side Effect Functions
 =======================
 Decomposing logic into 'pure' and side effects, these impure functions form an 'imperative shell' around the pure core of the program.
+
+Actors
+=====================
+Use actors to safely encapsulate mutable state (maintains a  mono-threaded process)
