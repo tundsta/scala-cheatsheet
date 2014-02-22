@@ -1,3 +1,57 @@
+//Futures
+
+// Make 3 sequential async calls
+for {
+  foo <- WS.url("http://foo.com").get()
+  bar <- WS.url("http://bar.com").get()
+  baz <- WS.url("http://baz.com").get()
+} yield {
+  // Build a Result using foo, bar, and baz
+
+  Ok(...)
+}
+
+// Make 3 parallel async calls
+val fooFuture = WS.url("http://foo.com").get()
+val barFuture = WS.url("http://bar.com").get()
+val bazFuture = WS.url("http://baz.com").get()
+
+for {
+  foo <- fooFuture
+  bar <- barFuture
+  baz <- bazFuture
+} yield {
+  // Build a Result using foo, bar, and baz
+
+  Ok(...)
+}
+
+// Handle Exceptions in Futures by logging them and returning a fallback value
+def withErrorHandling[T](f: Future[T], fallback: T): Future[T] = {
+  f.recover { case t: Throwable =>
+    Logger.error("Something went wrong!", t)
+    fallback
+  }
+}
+
+val myFuture = someAsyncIO()
+val myFutureWithFallback = withErrorHandling(myFuture, "fallback value")
+
+
+
+import scala.util.Try
+
+//Try/ Monad
+//Try will let you recover from exceptions at any point in the chain, so you can defer recovery to the end
+
+val sum = (for {
+  int1 <- Try(Integer.parseInt("one"))
+  int2 <- Try(Integer.parseInt("two"))
+} yield {
+    int1 + int2
+  }) recover {
+    case e => 0
+  }
 
 //Strategy pattern using function types
 type IntToStringStrategy = (Int) => String
@@ -51,8 +105,6 @@ def callByValue(x: Int) = {
   println("x2=" + x)
 }
 
-
-
 def callByName(x: => Int) = {
   println("x1=" + x)
   println("x2=" + x)
@@ -66,11 +118,16 @@ def something() = {
 callByValue(something())
 
 
+
+
 //calling something
 //  x1=1
 //  x2=1
 
 callByName(something())
+
+
+
 
 
 
@@ -105,6 +162,9 @@ val fAndThenG = f _ andThen g _
 case class Obj(f:String, f2:String)
 val o =("foo", "bar")
 val roadIncidents = for(i<-1 to 5) yield o.copy(f2=i.toInt)
+
+
+
 
 
 //Idiomatic scala while iteration
