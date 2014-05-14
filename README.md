@@ -15,4 +15,22 @@ Decomposing logic into 'pure' and side effects, these impure functions form an '
 
 Actors
 =====================
-Use actors to safely encapsulate mutable state (maintains a  mono-threaded process)
+Use actors to safely encapsulate mutable state, concurrency and fault tolerance strategies
+
+
+```scala
+//concatenate elements to a reactive mongo BSONDocument
+ Seq(
+  article.creationDate map (cd => "creationDate" -> BSONDateTime(cd.getMillis)),
+  article.updateDate map (ud => "updateDate" -> BSONDateTime(ud.getMillis))
+).flatten.foldLeft(bson) ((a,b)=> a ++ b)
+    }
+```
+
+Pattern matching/extracting nested case classes
+===============================================
+```scala
+ val foodEvent: PartialFunction[ Food, Option[  FOOD_EVENT ] ] = {
+     case Food(ingredient @ (_: Raisin | _:Cherry)) => Some(FOOD_EVENT(ingredient))
+   }
+ ```

@@ -1,59 +1,29 @@
-//Futures
+import javax.swing.text.BadLocationException
 
-// Make 3 sequential async calls
-for {
-  foo <- WS.url("http://foo.com").get()
-  bar <- WS.url("http://bar.com").get()
-  baz <- WS.url("http://baz.com").get()
-} yield {
-  // Build a Result using foo, bar, and baz
+//Function currying - uncurried function
+//uncurried
+def f(i:Int,s:String) = s.toInt + i
+//f: (i: Int, s: String)Int
+//curried
+def f(i:Int) = (s:String)=>s.toInt + i
+//f: (i: Int)String => Int
+f(5)("2")
+//res1: Int = 7
 
-  Ok(...)
-}
+// Partially applied function
+///
+def createA(i:Int, s:String) = i->s
+//createA: (i: Int, s: String)(Int, String)
 
-// Make 3 parallel async calls
-val fooFuture = WS.url("http://foo.com").get()
-val barFuture = WS.url("http://bar.com").get()
-val bazFuture = WS.url("http://baz.com").get()
+def createB(param3:Double) = createA(_:Int,s"3 $param3")
+//createB: (param3: Double)Int => (Int, String)
 
-for {
-  foo <- fooFuture
-  bar <- barFuture
-  baz <- bazFuture
-} yield {
-  // Build a Result using foo, bar, and baz
+createB(4.0)(3)
+//res5: (Int, String) = (3,3 4.0)
 
-  Ok(...)
-}
-
-// Handle Exceptions in Futures by logging them and returning a fallback value
-def withErrorHandling[T](f: Future[T], fallback: T): Future[T] = {
-  f.recover { case t: Throwable =>
-    Logger.error("Something went wrong!", t)
-    fallback
-  }
-}
-
-val myFuture = someAsyncIO()
-val myFutureWithFallback = withErrorHandling(myFuture, "fallback value")
-
-
-
-import scala.util.Try
-
-//Try/ Monad
-//Try will let you recover from exceptions at any point in the chain, so you can defer recovery to the end
-
-val sum = (for {
-  int1 <- Try(Integer.parseInt("one"))
-  int2 <- Try(Integer.parseInt("two"))
-} yield {
-    int1 + int2
-  }) recover {
-    case e => 0
-  }
 
 //Strategy pattern using function types
+///
 type IntToStringStrategy = (Int) => String
 
 val toStringStrategy: IntToStringStrategy =_.toString
@@ -81,8 +51,18 @@ val list = List(1,2, "a", "b")
 
 val list2 = list.collect{case x:Int => x+1}
 
+//PartialFunction errorHandling
+//private val errorHandling: PartialFunction[Throwable, Unit] = {
+//  case e: ExecutionException if e.getCause.isInstanceOf[UnknownGeonameException] => error(404, e, logTravelApi404)
+//  case e: UnknownGeonameException => error(404, e, logTravelApi404)
+//  case e: BadLocationException => error(400, e, logTravelApi400)
+//  case e => error(500, e, logTravelApi500)
+//}
+
+
 //function literal
 val functionLit = (i: Int) => {i % 2 == 0}
+
 //function literal with explicitly declared return type
 val functionLitExpDeclaredType: (Int) => Boolean = i => {i % 2 == 0}
 
