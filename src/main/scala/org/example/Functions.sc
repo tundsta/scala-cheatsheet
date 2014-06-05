@@ -1,6 +1,4 @@
-import javax.swing.text.BadLocationException
-
-//Function currying - uncurried function
+  //Function currying - uncurried function
 //uncurried
 def f(i:Int,s:String) = s.toInt + i
 //f: (i: Int, s: String)Int

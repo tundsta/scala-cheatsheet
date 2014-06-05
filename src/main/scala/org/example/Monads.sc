@@ -40,28 +40,3 @@ def withErrorHandling[T](f: Future[T], fallback: T): Future[T] = {
 
 val myFuture = someAsyncIO()
 val myFutureWithFallback = withErrorHandling(myFuture, "fallback value")
-
-
-
-import scala.util.{Failure, Success, Try}
-
-//Try/ Monad
-//Try will let you recover from exceptions at any point in the chain, so you can defer recovery to the end
-
-val sum = (for {
-  int1 <- Try(Integer.parseInt("one"))
-  int2 <- Try(Integer.parseInt("two"))
-} yield {
-    int1 + int2
-  }) recover {
-    case e => 0
-  }
-
-//Processing a seq of Trys
-val maybeInts:Seq[scala.util.Try[Int]] = List(
-  Success(1),
-  Success(2),
-  Failure(new java.lang.NumberFormatException("""For input string: "a""")),
-  Success(3),
-  Success(4))
-maybeInts foreach { case Success(x) => println(x) case Failure(y) =>println(y) }
