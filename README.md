@@ -26,11 +26,3 @@ Use actors to safely encapsulate mutable state, concurrency and fault tolerance 
 ).flatten.foldLeft(bson) ((a,b)=> a ++ b)
     }
 ```
-
-Pattern matching/extracting nested case classes
-===============================================
-```scala
- val foodEvent: PartialFunction[ Food, Option[  FOOD_EVENT ] ] = {
-     case Food(ingredient @ (_: Raisin | _:Cherry)) => Some(FOOD_EVENT(ingredient))
-   }
- ```
