@@ -1,0 +1,1 @@
+// Case classes are primarily intended to create “immutable records” that you can easily use in pattern-matching expressions.
