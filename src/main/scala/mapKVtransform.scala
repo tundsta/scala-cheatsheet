@@ -7,3 +7,6 @@ def transformStatuses(av: Map[String, AttributeValue]) ={
     }
     statuses.flatten
   }
+
+val m = Map("int"->5,"string"->"five")            //Map[String,Any] = Map(int -> 5, string -> five)
+m..map { case (k,v:Int) => (k, v+1); case x => x }
