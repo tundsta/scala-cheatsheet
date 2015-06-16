@@ -39,3 +39,12 @@ def withErrorHandling[T](f: Future[T], fallback: T): Future[T] = {
  
 val myFuture = someAsyncIO()
 val myFutureWithFallback = withErrorHandling(myFuture, "fallback value")
+
+
+//Future.sequence transforms a Traversable[Future[T]] into a Future[Traversable[T]]
+val a = Seq(Future(1), Future(1), Future(2), Future(3))
+val b = Future.sequence(a)
+val c = b.map(_.sum)
+
+c.value //Option[scala.util.Try[Int]] = Some(Success(7))
+
