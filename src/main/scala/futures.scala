@@ -48,3 +48,5 @@ val c = b.map(_.sum)
 
 c.value //Option[scala.util.Try[Int]] = Some(Success(7))
 
+//enable Future[Option[_]] composition
+option.map(Future.successful).getOrElse(Future.failed(new Exception(s"Error "))
