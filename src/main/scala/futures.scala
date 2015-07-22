@@ -50,3 +50,14 @@ c.value //Option[scala.util.Try[Int]] = Some(Success(7))
 
 //enable Future[Option[_]] composition
 option.map(Future.successful).getOrElse(Future.failed(new Exception(s"Error "))
+
+
+def findId(login: String): Future[Option[Int]] = Future.successful(Option(1))
+def findName(id: Int): Future[Option[String]] = Future.successful(Option("Robert"))
+def findFriends(name: String): Future[Option[List[String]]] = Future.successful(Option(List("loicd", "tpolecat")))
+
+for {
+  id      <- findId("TunaBoo")
+  name    <- id.map(findName).getOrElse(Future.successful(Option.empty))
+  friends <- name.map(findFriends).getOrElse(Future.successful(Option.empty))
+} yield friends
