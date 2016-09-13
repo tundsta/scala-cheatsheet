@@ -3,7 +3,7 @@ scala-cheatsheet
 
 Reference for Scala syntax, idioms and general good practice
 
-Conditional Structures
+Control Structures
 ======================
 
 When we use languages with functional features, we can do most of the work that we do in loops using maps, filters, and folds. 
