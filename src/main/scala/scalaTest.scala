@@ -16,4 +16,7 @@ val authenticationParameters = Table(
         implicit val request = fakeRequest.withFormUrlEncodedBody("loc" -> location, "number" -> number, "code" -> code)
         the[PreMappingFormException] thrownBy await(xAuthBlockDef.preMappingActions(currentFiling, user)) should have('errors(expectedFormErrors))
       }
-    }
+
+//Scalatest logical matchers
+i.incidentId must( be (1) or be (2) )
+

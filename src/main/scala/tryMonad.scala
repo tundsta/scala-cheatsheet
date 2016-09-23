@@ -1,3 +1,5 @@
+import scala.util.Try
+
 //Try/ Monad
 //Try will let you recover from exceptions at any point in the chain, so you can defer recovery to the end
  
