@@ -1,3 +1,5 @@
+import scala.util.Try
+
 //for expression with 2 generators translates into a flatMap
 
 

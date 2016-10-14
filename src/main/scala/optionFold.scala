@@ -2,7 +2,7 @@
 //opt.fold(bar)(foo)
 //Fold even gives us the additional benefit of being more type-strict than either of the previous alternatives. 
 
-For instance, while a and b in the example below have a type of Any (with value 2), c fails to compile:
+//For instance, while a and b in the example below have a type of Any (with value 2), c fails to compile:
 
 val opt = Option(1)
 

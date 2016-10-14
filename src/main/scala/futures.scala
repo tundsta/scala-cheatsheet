@@ -1,7 +1,9 @@
 //Monads let you compose functions that don’t compose well, such as functions that have side effects.
 
-import scala.concurrent.Future
- 
+import scala.concurrent.duration.FiniteDuration
+import scala.concurrent.{ExecutionContext, Future, Promise}
+import scala.util.Success
+
 // Make 3 sequential async calls
 for {
   foo <- WS.url("http://foo.com").get()
@@ -9,26 +11,26 @@ for {
   baz <- WS.url("http://baz.com").get()
 } yield {
   // Build a Result using foo, bar, and baz
- 
+
   Ok(...)
 }
- 
+
 // Make 3 parallel async calls
 val fooFuture = WS.url("http://foo.com").get()
 val barFuture = WS.url("http://bar.com").get()
 val bazFuture = WS.url("http://baz.com").get()
- 
+
 for {
   foo <- fooFuture
   bar <- barFuture
   baz <- bazFuture
 } yield {
   // Build a Result using foo, bar, and baz
- 
+
   Ok(...)
 }
- 
- 
+
+
 // Handle Exceptions in Futures by logging them and returning a fallback value
 def withErrorHandling[T](f: Future[T], fallback: T): Future[T] = {
   f.recover { case t: Throwable =>
@@ -36,7 +38,7 @@ def withErrorHandling[T](f: Future[T], fallback: T): Future[T] = {
     fallback
   }
 }
- 
+
 val myFuture = someAsyncIO()
 val myFutureWithFallback = withErrorHandling(myFuture, "fallback value")
 
@@ -61,3 +63,19 @@ for {
   name    <- id.map(findName).getOrElse(Future.successful(Option.empty))
   friends <- name.map(findFriends).getOrElse(Future.successful(Option.empty))
 } yield friends
+
+// schedule a future
+//
+def delayedFuture[T](delay: FiniteDuration)(block: => T)(implicit executor: ExecutionContext, system: ActorSystem): Future[T] = {
+  val promise = Promise[T]
+
+  system.scheduler.scheduleOnce(delay) {
+    try {
+      val result = block
+      promise.complete(Success(result))
+    } catch {
+      case t: Throwable => promise.failure(t)
+    }
+  }
+  promise.future
+}
