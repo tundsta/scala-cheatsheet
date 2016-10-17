@@ -1,5 +1,5 @@
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 def retryII[T](n: Int)(block: => Future[T]): Future[T] = {
   val attempts: Iterator[() => Future[T]] = (0 to 1).iterator.map(_ => () => block)
