@@ -8,7 +8,7 @@ object WeekDay {
   val daysOfWeek = Seq(Mon, Tue, Wed, Thu, Fri)
 }
 
-This version has an ordered enumeration, and uses a macro to generate the set of all values.
+//This version has an ordered enumeration, and uses a macro to generate the set of all values.
 
 object SolarSystemPlanets {
 

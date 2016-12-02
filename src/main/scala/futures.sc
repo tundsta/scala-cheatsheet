@@ -31,6 +31,27 @@ for {
 }
 
 
+val a = Future {
+  Thread.sleep(5000)
+  println("returning 1")
+  1
+}
+val b = Future {
+  Thread.sleep(1000)
+  println("returning 3")
+  3
+}
+
+
+val c = for {
+  maybea <- a
+  maybeb <- b
+} yield {
+  maybea + maybeb
+}
+
+
+
 // Handle Exceptions in Futures by logging them and returning a fallback value
 def withErrorHandling[T](f: Future[T], fallback: T): Future[T] = {
   f.recover { case t: Throwable =>
@@ -50,8 +71,11 @@ val c = b.map(_.sum)
 
 c.value //Option[scala.util.Try[Int]] = Some(Success(7))
 
+
 //enable Future[Option[_]] composition
-option.map(Future.successful).getOrElse(Future.failed(new Exception(s"Error "))
+None
+  .map(_ => Future.successful("success"))
+  .getOrElse(Future.failed(new Exception(s"Error ")))
 
 
 def findId(login: String): Future[Option[Int]] = Future.successful(Option(1))
@@ -59,8 +83,8 @@ def findName(id: Int): Future[Option[String]] = Future.successful(Option("Robert
 def findFriends(name: String): Future[Option[List[String]]] = Future.successful(Option(List("loicd", "tpolecat")))
 
 for {
-  id      <- findId("TunaBoo")
-  name    <- id.map(findName).getOrElse(Future.successful(Option.empty))
+  id <- findId("TunaBoo")
+  name <- id.map(findName).getOrElse(Future.successful(Option.empty))
   friends <- name.map(findFriends).getOrElse(Future.successful(Option.empty))
 } yield friends
 
