@@ -1,4 +1,4 @@
-With andThen we can execute a series of futures and explicitly define the execution order.
+ With andThen we can execute a series of futures and explicitly define the execution order.
 
     // the for {} construct lets us execute multiple futures in parallel
     // to serially execute futures in specific orders, we use `andThen`

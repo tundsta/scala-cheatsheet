@@ -31,21 +31,21 @@ for {
 }
 
 
-val a = Future {
+val aa = Future {
   Thread.sleep(5000)
   println("returning 1")
   1
 }
-val b = Future {
+val bb = Future {
   Thread.sleep(1000)
   println("returning 3")
   3
 }
 
 
-val c = for {
-  maybea <- a
-  maybeb <- b
+val cc = for {
+  maybea <- aa
+  maybeb <- bb
 } yield {
   maybea + maybeb
 }
