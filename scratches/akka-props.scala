@@ -3,6 +3,7 @@ class SomeActor(parameter: Long)(implicit service:Service) extends Actor {
     case message => // Do your stuff
   }
 }
+class Service
 
 object SomeActor {
   def props(parameter: Long)(implicit service:Service) = Props(new SomeActor(parameter))
