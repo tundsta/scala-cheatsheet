@@ -1,15 +1,22 @@
-Dog <: Animal implies Seq[Dog] <: Seq[Animal]
+import scala.concurrent.Future
+//Dog <: Animal implies Seq[Dog] <: Seq[Animal]
+
+
 //Functions are the best example of contravariance
 //(note that they’re only contravariant on their arguments, and they’re actually covariant on their result).
 
 //A type can be covariant when it does not call methods on the type that it is generic over. If the type needs to call methods on generic objects that are passed into it , it cannot be covariant. 
 //Archetypal examples:
-Seq[+A], Option[+A], Future[+T]
+Seq[+A]
+Option[+A]
+Future[+T]
 
 //A type can be contravariant when it does call methods on the type that it is generic over. If the type needs to return values of the type it is generic over, it cannot be contravariant. 
 
 //Archetypal examples: 
-Function1[-T1, +R], CanBuildFrom[-From, -Elem, +To], OutputChannel[-Msg]
+Function1[-T1, +R]
+CanBuildFrom[-From, -Elem, +To]
+OutputChannel[-Msg]
 
 //Rest assured, the compiler will inform you when you break these rules:
 

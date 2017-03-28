@@ -1,3 +1,5 @@
+import scala.akka._
+
 class SomeActor(parameter: Long)(implicit service:Service) extends Actor {
   def receive = {
     case message => // Do your stuff

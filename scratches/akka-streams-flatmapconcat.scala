@@ -1,3 +1,5 @@
+import akka.stream.scaladsl.Source
+
 val json = """{ | "id": "c75cb448-df0e-4692-8e06-0321b7703992", | "timestamp": 1486925114, | "measurements": { | "power": 1.7, | "rotor_speed": 3.9, | "wind_speed": 10.1 | } |}""".stripMargin
 Source.single(json).map(MessageParser.parse).mapConcat(identity).runWith(Sink.foreach(println))
 //This works, but decomposing messages is the perfect use - case for flatMapConcat.
