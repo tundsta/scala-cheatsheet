@@ -29,7 +29,7 @@ def retryI[T](n: Int)(block: => Future[T]): Future[T] = {
 
 def retryTry[T](n: Int)(block: => Try[T]): Try[T] = {
   if (n == 0) Failure(new Exception("Sorry")) else block.recoverWith {
-    case e =>
+    case _ =>
       println("trying again")
       retryTry(n - 1)(block)
   }

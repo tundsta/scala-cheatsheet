@@ -13,5 +13,5 @@ val a = opt match {
 
 val b = opt map (_ + 1) getOrElse "a"
 
-val c = opt.fold("a")(_ + 1)
-//On the not-so-bright side, fold may not be as readable as the alternatives and a little error-prone, too, since it is not clear what comes first, None or Some?
+val c = opt.fold("a")(_ + 1 toString)
+//fold may not be as readable as the alternatives and a little error-prone, too, since it is not clear what comes first, None or Some?
