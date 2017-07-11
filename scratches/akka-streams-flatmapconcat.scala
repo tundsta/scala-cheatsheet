@@ -7,6 +7,7 @@ Source.single(json).map(MessageParser.parse).mapConcat(identity).runWith(Sink.fo
 // discoverable or approachable name, but it is the right choice for decomposing lists of
 // elements, and it handles the example above in a single stage.
 Source.single(json).flatMapConcat { message =>
-  val measurements = MessageParser.parse(message) Source (measurements)
+  val measurements = MessageParser.parse(message)
+  Source (measurements)
 }
   .runWith(Sink.foreach(println))
