@@ -16,7 +16,7 @@ import akka.stream.scaladsl.{Flow, RunnableGraph, Sink, Source}
 /**
   * Stage modifiers
   * ---------------
-  * .map – transform steam by executing function on each element
+  * .map – transform stream by executing function on each element
   * .flatMap – takes in a collection and flattens
   * .filter – end the stage by returning false, else emit element downstream if true
   * .mapConcat – takes an async list and returns a list (futures to materialised value)
@@ -71,6 +71,8 @@ val fmc = Source('A' to 'E').flatMapConcat { letter =>
   val a = (1 to 3).map(index => s"$letter$index")
   Source(a)
 }
+
+val x = Source(1 to 10).flatMapConcat {i => Source((1 to 3).map(_ * i)) }
 
 fmc.runForeach(println)
 
@@ -276,7 +278,7 @@ Source(List(1, 2, 3)).map { i =>
   */
 implicit val mat = ActorMaterializer(
   ActorMaterializerSettings(system)
-    .withSupervisionStrategy(Supervision.restartingDecider)
+    .withSupervisionStrategy(Supervision.restartingDecider[Supervision.Decider])
 )
 
 /**
