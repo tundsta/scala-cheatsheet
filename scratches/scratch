@@ -1,0 +1,23 @@
+val l = Seq(1,2,3)
+
+
+//def  findBy(i:Int) = {
+//  val x = if (i == 4) 1 else i
+//  l.find(_ == x)
+//}
+//def  findBy(i:Int): Option[Int] = {
+//  i match {
+//    case 4 => findBy(1)
+//    case x => l.find(_ == x)
+//  }
+//}
+
+
+implicit def x(i:Int)=  if (i == 4) 1
+
+def findBy(i:Int)  = l.find(_ == i)
+
+findBy(1)
+findBy(2)
+findBy(3)
+findBy(4)
